@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detection History · FakeGuard</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><img src="img/logo.svg" alt="" /> FakeGuard</div>
+    <nav class="nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="history.html" class="active">History</a>
+    </nav>
+    <div class="user-box">
+      <span class="name muted" id="userName"></span>
+      <div class="avatar" id="userAvatar">?</div>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-head">
+      <div>
+        <h1>Detection History</h1>
+        <p class="muted" style="margin:0">All analyses you have run, newest first. Click a row to view full details.</p>
+      </div>
+      <div class="filters">
+        <select id="filterModality">
+          <option value="">All content types</option>
+          <option value="text">Text</option>
+          <option value="image">Image</option>
+          <option value="video">Video</option>
+        </select>
+        <select id="filterPrediction">
+          <option value="">All verdicts</option>
+          <option value="REAL">REAL</option>
+          <option value="FAKE">FAKE</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Timestamp</th><th>Content type</th><th>Input</th><th>Verdict</th><th>Confidence</th><th>Time</th><th></th></tr>
+          </thead>
+          <tbody id="historyBody"><tr><td colspan="8" class="muted">Loading…</td></tr></tbody>
+        </table>
+      </div>
+      <div class="pager">
+        <span id="pagerInfo"></span>
+        <div style="display:flex;gap:.5rem">
+          <button class="btn btn-ghost btn-sm" id="prevPage">← Prev</button>
+          <button class="btn btn-ghost btn-sm" id="nextPage">Next →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="detailModal">
+    <div class="card">
+      <div class="card-title"><h3>Detection Details</h3><button class="btn btn-ghost btn-sm" id="closeModal">Close</button></div>
+      <div id="detailBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/api.js"></script>
+  <script src="js/result.js"></script>
+  <script src="js/history.js"></script>
+</body>
+</html>

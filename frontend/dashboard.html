@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard · FakeGuard</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><img src="img/logo.svg" alt="" /> FakeGuard</div>
+    <nav class="nav">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="history.html">History</a>
+    </nav>
+    <div class="user-box">
+      <span class="name muted" id="userName"></span>
+      <div class="avatar" id="userAvatar">?</div>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-head">
+      <div>
+        <h1>Unified Detection Dashboard</h1>
+        <p class="muted" style="margin:0">Analyze newspaper text, images and videos. Each input is classified as REAL or FAKE with a confidence score.</p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" id="clearTab" title="Clear the active tab" aria-label="Clear the active tab">✕ Clear</button>
+    </div>
+
+    <section class="stats">
+      <div class="stat"><div class="k">Total analyses</div><div class="v" id="statTotal">0</div></div>
+      <div class="stat fake"><div class="k">Fake detected</div><div class="v" id="statFake">0</div></div>
+      <div class="stat real"><div class="k">Real verified</div><div class="v" id="statReal">0</div></div>
+      <div class="stat"><div class="k">Text / Image</div><div class="v"><span id="statText">0</span> / <span id="statImage">0</span></div></div>
+      <div class="stat"><div class="k">Video</div><div class="v" id="statVideo">0</div></div>
+    </section>
+
+    <div class="grid-main">
+      <section class="card">
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="text" role="tab">📰 <span class="t">Newspaper / Text</span></button>
+          <button class="tab" data-tab="image" role="tab">🖼️ <span class="t">Image Forensics</span></button>
+          <button class="tab" data-tab="video" role="tab">🎞️ <span class="t">Deepfake Video</span></button>
+        </div>
+
+        <!-- TEXT -->
+        <div class="tab-panel active" id="panel-text">
+          <p class="panel-desc">Paste a newspaper article, news headline or social-media post. Text is cleaned and tokenized with NLTK,
+            then classified by a TF-IDF + Logistic Regression baseline and a BERT/RoBERTa transformer.</p>
+          <form id="textForm">
+            <div class="field">
+              <label for="textTitle">Headline (optional)</label>
+              <input id="textTitle" maxlength="500" placeholder="e.g. Central bank holds key rate steady" />
+            </div>
+            <div class="field">
+              <label for="textBody">Article text</label>
+              <textarea id="textBody" maxlength="20000" placeholder="Paste at least 20 characters of article text…"></textarea>
+            </div>
+            <div class="row-actions">
+              <div class="chips">
+                <button type="button" class="chip" data-sample="real">Load real sample</button>
+                <button type="button" class="chip" data-sample="fake">Load fake sample</button>
+              </div>
+              <span class="char-count" id="charCount">0 / 20000</span>
+              <button class="btn" type="submit">Analyze text</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="tab-panel" id="panel-image">
+          <p class="panel-desc">Upload a photo or newspaper image. It is resized and normalized with OpenCV, then checked by an
+            EfficientNet CNN, XceptionNet on detected faces, and ELA / noise / frequency forensics.</p>
+          <form id="imageForm">
+            <label class="dropzone" id="imageDrop">
+              <input type="file" id="imageInput" accept=".jpg,.jpeg,.png,.bmp,.webp" />
+              <div class="big">⬆️</div>
+              <div><strong>Drop an image here</strong> or click to browse</div>
+              <div class="muted" style="font-size:.85rem">JPG, PNG, BMP, WEBP · max 10 MB</div>
+            </label>
+            <div class="preview" id="imagePreview"><img alt="preview" /><div class="file-meta"></div></div>
+            <div class="row-actions" style="margin-top:1rem">
+              <span></span>
+              <button class="btn" type="submit" disabled>Analyze image</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- VIDEO -->
+        <div class="tab-panel" id="panel-video">
+          <p class="panel-desc">Upload a short video clip. Key frames are extracted with OpenCV, faces are tracked, and a CNN
+            (spatial features) + LSTM (temporal sequence) pipeline looks for deepfake manipulation.</p>
+          <form id="videoForm">
+            <label class="dropzone" id="videoDrop">
+              <input type="file" id="videoInput" accept=".mp4,.avi,.mov,.mkv,.webm" />
+              <div class="big">🎬</div>
+              <div><strong>Drop a video here</strong> or click to browse</div>
+              <div class="muted" style="font-size:.85rem">MP4, AVI, MOV, MKV, WEBM · max 100 MB</div>
+            </label>
+            <div class="preview" id="videoPreview"><video controls muted></video><div class="file-meta"></div></div>
+            <div class="row-actions" style="margin-top:1rem">
+              <span></span>
+              <button class="btn" type="submit" disabled>Analyze video</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="card" id="resultCard">
+        <div class="card-title"><h3>Detection Result</h3><span class="badge-tag" id="resultId"></span></div>
+        <div id="resultBody">
+          <div class="result-empty"><div class="big">🛡️</div>Run an analysis to see the verdict, confidence score and forensic signals here.</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="lower-grid">
+      <section class="card">
+        <div class="card-title"><h3>Model Status</h3><button class="btn btn-ghost btn-sm" id="refreshStatus">Refresh</button></div>
+        <div class="status-list" id="statusList"><span class="muted">Loading…</span></div>
+      </section>
+      <section class="card">
+        <div class="card-title"><h3>Model Performance Metrics</h3><span class="muted" style="font-size:.8rem">Accuracy · Precision · Recall · F1</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Model</th><th>Modality</th><th>Dataset</th><th>Acc</th><th>Prec</th><th>Rec</th><th>F1</th></tr></thead>
+            <tbody id="metricsBody"><tr><td colspan="7" class="muted">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/api.js"></script>
+  <script src="js/result.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

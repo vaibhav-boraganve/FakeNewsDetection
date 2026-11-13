@@ -1,0 +1,30 @@
+# --- Web / API ---
+fastapi>=0.110
+uvicorn[standard]>=0.27
+python-multipart>=0.0.9
+pydantic>=2.5
+email-validator>=2.1
+python-dotenv>=1.0
+
+# --- Database ---
+SQLAlchemy>=2.0
+
+# --- Auth ---
+bcrypt>=4.1
+PyJWT>=2.8
+
+# --- ML / NLP / CV ---
+numpy>=1.24,<3
+scikit-learn>=1.3
+joblib>=1.3
+nltk>=3.8
+opencv-python-headless>=4.8,<5  # 5.x removed the Haar CascadeClassifier face detector
+Pillow>=10.0
+torch>=2.1
+torchvision>=0.16
+timm>=0.9.12
+transformers>=4.38
+
+# --- Testing ---
+pytest>=7.4
+httpx>=0.26

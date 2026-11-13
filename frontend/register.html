@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register · FakeGuard</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="auth-wrap">
+    <section class="auth-hero">
+      <div class="brand"><img src="img/logo.svg" alt="" /> FakeGuard</div>
+      <h1>Create your <span>analyst account</span></h1>
+      <p class="muted">Every analysis you run is stored in your personal detection history, with the verdict,
+        confidence score, modality and inference time.</p>
+      <div class="feature-list">
+        <div class="feature"><div class="ico">🔐</div><div><strong>Secure by default</strong><span class="muted">Passwords are hashed with bcrypt; sessions use signed JWT tokens.</span></div></div>
+        <div class="feature"><div class="ico">📊</div><div><strong>Transparent results</strong><span class="muted">See which models contributed and the forensic signals behind each verdict.</span></div></div>
+      </div>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-card">
+        <h2>Create account</h2>
+        <p class="muted" style="margin-top:0">It takes less than a minute.</p>
+        <div id="formError" class="form-error hidden"></div>
+        <form id="registerForm" novalidate>
+          <div class="field">
+            <label for="full_name">Full name</label>
+            <input id="full_name" name="full_name" type="text" autocomplete="name" required minlength="2" placeholder="Jane Doe" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="At least 8 characters" />
+          </div>
+          <div class="field">
+            <label for="confirm">Confirm password</label>
+            <input id="confirm" name="confirm" type="password" autocomplete="new-password" required minlength="8" />
+          </div>
+          <button class="btn" type="submit" style="width:100%">Create account</button>
+        </form>
+        <p class="switch">Already registered? <a href="index.html">Sign in</a></p>
+      </div>
+    </section>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

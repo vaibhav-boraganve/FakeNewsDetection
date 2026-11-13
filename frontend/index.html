@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login · FakeGuard – Fake Detection in Newspaper and Images</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="auth-wrap">
+    <section class="auth-hero">
+      <div class="brand"><img src="img/logo.svg" alt="" /> FakeGuard</div>
+      <h1>Fake Detection in <span>Newspaper &amp; Images</span></h1>
+      <p class="muted">A centralized AI platform that analyzes multimodal digital content and classifies it as
+        <strong>REAL</strong> or <strong>FAKE</strong> with a confidence score.</p>
+      <div class="feature-list">
+        <div class="feature"><div class="ico">📰</div><div><strong>Newspaper / Text Analysis</strong><span class="muted">NLTK preprocessing, TF-IDF + ML baseline and BERT/RoBERTa transformer.</span></div></div>
+        <div class="feature"><div class="ico">🖼️</div><div><strong>Image Forensics</strong><span class="muted">OpenCV preprocessing, EfficientNet CNN, XceptionNet for faces, ELA &amp; spectral forensics.</span></div></div>
+        <div class="feature"><div class="ico">🎞️</div><div><strong>Deepfake Video Detection</strong><span class="muted">Key-frame extraction with CNN spatial features + LSTM temporal analysis.</span></div></div>
+      </div>
+      <span class="badge-tag">Sanjay Ghodawat University · Dept. of CSE · B.Tech Project 2026–27</span>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-card">
+        <h2>Welcome back</h2>
+        <p class="muted" style="margin-top:0">Sign in to your detection dashboard.</p>
+        <div id="formError" class="form-error hidden"></div>
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" />
+          </div>
+          <button class="btn" type="submit" style="width:100%">Sign in</button>
+        </form>
+        <p class="switch">New here? <a href="register.html">Create an account</a></p>
+      </div>
+    </section>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
